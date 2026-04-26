@@ -1,0 +1,57 @@
+name: Sync Laravel split repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'laravel/**'
+      - 'LICENSE'
+      - '.github/workflows/sync-laravel.yml'
+    tags:
+      - 'laravel-v*'
+  workflow_dispatch:
+
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout monorepo (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git identity
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Sync LICENSE into laravel subtree
+        run: |
+          if ! cmp -s LICENSE laravel/LICENSE; then
+            cp LICENSE laravel/LICENSE
+            git add laravel/LICENSE
+            git commit -m 'chore(laravel): sync LICENSE from monorepo' || true
+          fi
+
+      - name: Subtree split
+        id: split
+        run: |
+          git subtree split --prefix=laravel -b laravel-split
+          echo "sha=$(git rev-parse laravel-split)" >> "$GITHUB_OUTPUT"
+
+      - name: Push split branch to laravel repo as main
+        run: |
+          git push --force \
+            "https://x-access-token:${{ secrets.SPLIT_REPO_TOKEN }}@github.com/hadagalberto/beavertech-tracker-laravel.git" \
+            laravel-split:main
+
+      - name: Mirror release tag (laravel-vX.Y.Z -> vX.Y.Z) when triggered by tag
+        if: startsWith(github.ref, 'refs/tags/laravel-v')
+        run: |
+          NEW_TAG="${GITHUB_REF_NAME#laravel-}"
+          git tag "$NEW_TAG" laravel-split
+          git push \
+            "https://x-access-token:${{ secrets.SPLIT_REPO_TOKEN }}@github.com/hadagalberto/beavertech-tracker-laravel.git" \
+            "$NEW_TAG"

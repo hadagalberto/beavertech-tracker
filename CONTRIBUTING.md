@@ -42,12 +42,22 @@ The matching GitHub Actions workflow under `.github/workflows/publish-*.yml` han
 | Secret | Used by |
 |---|---|
 | `NUGET_API_KEY` | `publish-dotnet.yml` |
-| `NPM_TOKEN` | `publish-node.yml` (Granular Access Token scoped to `@beaver-tech`) |
-| `OSSRH_USERNAME`, `OSSRH_TOKEN`, `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE` | `publish-java.yml` |
+| `NPM_TOKEN` | `publish-node.yml` (Granular Access Token scoped to `@beaver-tech`, with 2FA bypass enabled) |
+| `SPLIT_REPO_TOKEN` | `sync-laravel.yml` (PAT with `repo` scope, write access to `hadagalberto/beavertech-tracker-laravel`) |
+| `OSSRH_USERNAME`, `OSSRH_TOKEN`, `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE` | `publish-java.yml` (when Java publishing is enabled) |
 
 > **Future**: switch `publish-node.yml` to [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC) once the org has the feature available — that removes the need for `NPM_TOKEN` entirely. The workflow already requests `id-token: write` and uses `--provenance`, so the migration only requires changing the env block to drop `NODE_AUTH_TOKEN` and configuring a trusted publisher on npmjs.com.
 
-**Laravel/Packagist**: no secret — package is updated by Packagist webhook on tag push, provided the repo is registered at [packagist.org](https://packagist.org).
+## Laravel split repo
+
+The `laravel/` subtree is mirrored to a dedicated repo [hadagalberto/beavertech-tracker-laravel](https://github.com/hadagalberto/beavertech-tracker-laravel) so Packagist can register the package (Packagist requires `composer.json` at repo root).
+
+The mirroring is automatic via [`.github/workflows/sync-laravel.yml`](.github/workflows/sync-laravel.yml):
+
+- Pushes to `main` that touch `laravel/**` or `LICENSE` → split repo `main` is force-updated.
+- Tag `laravel-vX.Y.Z` on the monorepo → split repo gets a matching `vX.Y.Z` tag (Packagist auto-detects).
+
+Do **not** edit the split repo directly — changes will be overwritten by the next sync.
 
 ## Local development
 
