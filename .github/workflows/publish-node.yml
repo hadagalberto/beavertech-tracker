@@ -20,9 +20,8 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      - name: Upgrade npm to a version that supports Trusted Publishing
-        run: npm install -g npm@latest
-
-      - name: Publish to npm (Trusted Publishing via OIDC)
+      - name: Publish to npm
         working-directory: node
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public --provenance

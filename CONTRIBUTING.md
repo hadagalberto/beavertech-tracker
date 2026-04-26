@@ -42,9 +42,10 @@ The matching GitHub Actions workflow under `.github/workflows/publish-*.yml` han
 | Secret | Used by |
 |---|---|
 | `NUGET_API_KEY` | `publish-dotnet.yml` |
+| `NPM_TOKEN` | `publish-node.yml` (Granular Access Token scoped to `@beaver-tech`) |
 | `OSSRH_USERNAME`, `OSSRH_TOKEN`, `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE` | `publish-java.yml` |
 
-**npm**: no secret needed — uses [Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). Configure the trusted publisher once on npmjs.com pointing at this repo + workflow `publish-node.yml`.
+> **Future**: switch `publish-node.yml` to [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC) once the org has the feature available — that removes the need for `NPM_TOKEN` entirely. The workflow already requests `id-token: write` and uses `--provenance`, so the migration only requires changing the env block to drop `NODE_AUTH_TOKEN` and configuring a trusted publisher on npmjs.com.
 
 **Laravel/Packagist**: no secret — package is updated by Packagist webhook on tag push, provided the repo is registered at [packagist.org](https://packagist.org).
 
