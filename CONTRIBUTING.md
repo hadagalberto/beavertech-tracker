@@ -42,10 +42,11 @@ The matching GitHub Actions workflow under `.github/workflows/publish-*.yml` han
 | Secret | Used by |
 |---|---|
 | `NUGET_API_KEY` | `publish-dotnet.yml` |
-| `NPM_TOKEN` | `publish-node.yml` |
 | `OSSRH_USERNAME`, `OSSRH_TOKEN`, `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE` | `publish-java.yml` |
 
-Laravel/Packagist requires no secret — the package is updated by Packagist webhook on tag push, provided the repo is registered at [packagist.org](https://packagist.org).
+**npm**: no secret needed — uses [Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). Configure the trusted publisher once on npmjs.com pointing at this repo + workflow `publish-node.yml`.
+
+**Laravel/Packagist**: no secret — package is updated by Packagist webhook on tag push, provided the repo is registered at [packagist.org](https://packagist.org).
 
 ## Local development
 
