@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build
+        working-directory: dotnet/BeaverTech.Tracker
+        run: dotnet build --configuration Release
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        working-directory: node
+        run: npm install --no-audit --no-fund
+      - name: Syntax check
+        working-directory: node
+        run: node --check src/index.js
+
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Build
+        working-directory: java
+        run: mvn -B -DskipTests verify
+
+  laravel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+      - name: Validate composer
+        working-directory: laravel
+        run: composer validate --strict
+      - name: Install
+        working-directory: laravel
+        run: composer install --prefer-dist --no-progress

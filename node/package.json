@@ -1,0 +1,33 @@
+{
+  "name": "beavertech-tracker-node",
+  "version": "0.1.0",
+  "description": "BeaverTech tracker SDK for Node.js — sends application errors and logs to a BeaverTech error monitoring server.",
+  "main": "src/index.js",
+  "license": "MIT",
+  "author": "BeaverTech",
+  "homepage": "https://github.com/hadagalberto/beavertech-tracker#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadagalberto/beavertech-tracker.git",
+    "directory": "node"
+  },
+  "bugs": {
+    "url": "https://github.com/hadagalberto/beavertech-tracker/issues"
+  },
+  "keywords": [
+    "beavertech",
+    "error",
+    "monitoring",
+    "sentry",
+    "logging",
+    "tracker"
+  ],
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16"
+  }
+}

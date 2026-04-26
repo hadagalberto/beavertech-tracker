@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>BeaverTech.Tracker</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>BeaverTech</Authors>
+    <Company>BeaverTech</Company>
+    <Description>BeaverTech tracker SDK for .NET — sends application errors and logs to a BeaverTech error monitoring server.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/hadagalberto/beavertech-tracker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/hadagalberto/beavertech-tracker</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>beavertech;error;monitoring;sentry;logging;tracker</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+</Project>

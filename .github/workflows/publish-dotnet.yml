@@ -1,0 +1,40 @@
+name: Publish .NET
+
+on:
+  push:
+    tags:
+      - 'dotnet-v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        working-directory: dotnet/BeaverTech.Tracker
+        run: dotnet restore
+
+      - name: Build
+        working-directory: dotnet/BeaverTech.Tracker
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack
+        working-directory: dotnet/BeaverTech.Tracker
+        run: dotnet pack --configuration Release --no-build --output ../../artifacts
+
+      - name: Push to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push 'artifacts/*.nupkg' \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
