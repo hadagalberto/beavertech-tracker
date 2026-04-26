@@ -28,7 +28,7 @@ BEAVERTECH_ERROR_MONITOR_APPLICATION=meu-node-app
 ## Uso basico
 
 ```js
-const { init } = require('beavertech-tracker-node');
+const { init } = require('@beaver-tech/tracker');
 
 init();
 ```
@@ -36,7 +36,7 @@ init();
 ## Providers (request/user)
 
 ```js
-const { init } = require('beavertech-tracker-node');
+const { init } = require('@beaver-tech/tracker');
 
 init({
   requestProvider: () => ({
@@ -54,7 +54,7 @@ init({
 ## Captura manual
 
 ```js
-const { init } = require('beavertech-tracker-node');
+const { init } = require('@beaver-tech/tracker');
 
 const client = init();
 

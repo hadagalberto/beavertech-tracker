@@ -7,7 +7,7 @@ This monorepo hosts four SDKs published to public registries:
 | Language | Package | Registry | Install |
 |---|---|---|---|
 | .NET | `BeaverTech.Tracker` | NuGet.org | `dotnet add package BeaverTech.Tracker` |
-| Node.js | `beavertech-tracker-node` | npm | `npm install beavertech-tracker-node` |
+| Node.js | `@beaver-tech/tracker` | npm | `npm install @beaver-tech/tracker` |
 | Java | `io.github.hadagalberto:tracker-java` | Maven Central | see [java/README.md](java/README.md) |
 | Laravel | `beavertech/tracker-laravel` | Packagist | `composer require beavertech/tracker-laravel` |
 
@@ -30,7 +30,7 @@ See per-language docs:
 ```
 beavertech-tracker/
 ├── dotnet/   # BeaverTech.Tracker (NuGet)
-├── node/     # beavertech-tracker-node (npm)
+├── node/     # @beaver-tech/tracker (npm)
 ├── java/     # io.github.hadagalberto:tracker-java (Maven Central)
 ├── laravel/  # beavertech/tracker-laravel (Packagist)
 └── docs/     # per-language usage guides

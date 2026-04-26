@@ -1,6 +1,6 @@
 # BeaverTech Tracker - Node.js (publicacao)
 
-Publicacao do pacote `beavertech-tracker-node`.
+Publicacao do pacote `@beaver-tech/tracker`.
 
 ## Preparar release
 

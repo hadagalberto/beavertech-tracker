@@ -1,6 +1,9 @@
 {
-  "name": "beavertech-tracker-node",
+  "name": "@beaver-tech/tracker",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "BeaverTech tracker SDK for Node.js — sends application errors and logs to a BeaverTech error monitoring server.",
   "main": "src/index.js",
   "license": "MIT",
